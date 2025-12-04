@@ -53,7 +53,7 @@ fn main() {
     assert_eq!(part1(include_str!("./input_test.txt")), 13);
     assert_eq!(part1(include_str!("./input.txt")), 1424);
     assert_eq!(part2(include_str!("./input_test.txt")), 43);
-    assert_eq!(part2(include_str!("./input.txt")), 0);
+    assert_eq!(part2(include_str!("./input.txt")), 8727);
 }
 
 #[test]
