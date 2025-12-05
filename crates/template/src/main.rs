@@ -1,3 +1,5 @@
+use utils::*;
+
 fn part1(input: &str) -> usize {
     0
 }
@@ -7,10 +9,10 @@ fn part2(input: &str) -> usize {
 }
 
 fn main() {
-    assert_eq!(part1(include_str!("./input_test.txt")), 0);
-    //     assert_eq!(part1(include_str!("./input.txt")), 0);
-    //     assert_eq!(part2(include_str!("./input_test.txt")), 0);
-    //     assert_eq!(part2(include_str!("./input.txt")), 0);
+    part1_test!(0);
+    //     part1_answer!(0);
+    //     part2_test!(0);
+    //     part2_answer!(0);
 }
 
 #[test]

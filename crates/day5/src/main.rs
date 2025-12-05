@@ -1,3 +1,5 @@
+use utils::*;
+
 fn part1(input: &str) -> usize {
     let (ranges, ingredients) = utils::split_double_newline_once(input);
     let ranges = ranges
@@ -56,10 +58,10 @@ fn part2(input: &str) -> usize {
 }
 
 fn main() {
-    assert_eq!(part1(include_str!("./input_test.txt")), 3);
-    assert_eq!(part1(include_str!("./input.txt")), 896);
-    assert_eq!(part2(include_str!("./input_test.txt")), 14);
-    assert_eq!(part2(include_str!("./input.txt")), 346240317247002);
+    part1_test!(3);
+    part1_answer!(896);
+    part2_test!(14);
+    part2_answer!(346240317247002);
 }
 
 #[test]

@@ -1,3 +1,5 @@
+use utils::*;
+
 enum Turn {
     Left(usize),
     Right(usize),
@@ -63,10 +65,10 @@ fn part2(input: &str) -> usize {
 }
 
 fn main() {
-    assert_eq!(part1(include_str!("./input_test.txt")), 3);
-    assert_eq!(part1(include_str!("./input.txt")), 982);
-    assert_eq!(part2(include_str!("./input_test.txt")), 6);
-    assert_eq!(part2(include_str!("./input.txt")), 6106);
+    part1_test!(3);
+    part1_answer!(982);
+    part2_test!(6);
+    part2_answer!(6106);
 }
 
 #[test]

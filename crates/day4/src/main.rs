@@ -1,4 +1,5 @@
 use utils::grid::Grid;
+use utils::*;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Cell {
@@ -50,10 +51,10 @@ fn part2(input: &str) -> usize {
 }
 
 fn main() {
-    assert_eq!(part1(include_str!("./input_test.txt")), 13);
-    assert_eq!(part1(include_str!("./input.txt")), 1424);
-    assert_eq!(part2(include_str!("./input_test.txt")), 43);
-    assert_eq!(part2(include_str!("./input.txt")), 8727);
+    part1_test!(13);
+    part1_answer!(1424);
+    part2_test!(43);
+    part2_answer!(8727);
 }
 
 #[test]

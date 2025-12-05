@@ -1,3 +1,5 @@
+use utils::*;
+
 struct Id(usize, usize);
 
 impl Id {
@@ -60,10 +62,10 @@ fn part2(input: &str) -> usize {
 }
 
 fn main() {
-    assert_eq!(part1(include_str!("./input_test.txt")), 1227775554);
-    assert_eq!(part1(include_str!("./input.txt")), 13108371860);
-    assert_eq!(part2(include_str!("./input_test.txt")), 4174379265);
-    assert_eq!(part2(include_str!("./input.txt")), 22471660255);
+    part1_test!(1227775554);
+    part1_answer!(13108371860);
+    part2_test!(4174379265);
+    part2_answer!(22471660255);
 }
 
 #[test]

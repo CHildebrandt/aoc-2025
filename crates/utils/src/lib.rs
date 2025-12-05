@@ -36,53 +36,83 @@ pub fn whitespaced_ints(input: &str) -> Vec<usize> {
         .collect()
 }
 
-fn answer<T: PartialEq + Debug>(get: impl FnOnce() -> T, actual: T, is_test: bool, part: u8) {
+fn answer<T: PartialEq + Debug>(
+    get: impl FnOnce() -> T,
+    actual: T,
+    is_test: bool,
+    part: u8,
+    day: &str,
+) {
+    use std::io::{stderr, Write};
+
     let time = std::time::Instant::now();
-    assert_eq!(get(), actual);
-    println!(
-        "Part {} {}passed!",
+    let result = get();
+    let elapsed = time.elapsed();
+
+    assert_eq!(result, actual);
+
+    let msg = format!(
+        "[{}] Part {} {}passed! Elapsed: {:.2?}\n",
+        day,
         part,
-        if is_test { "test " } else { "" }
+        if is_test { "test " } else { "" },
+        elapsed
     );
-    println!("Elapsed: {:.2?}", time.elapsed());
+    let _ = stderr().lock().write_all(msg.as_bytes());
 }
-pub fn test_part1<T: PartialEq + Debug>(get: impl FnOnce() -> T, actual: T) {
-    answer(get, actual, true, 1);
+pub fn test_part1<T: PartialEq + Debug>(get: impl FnOnce() -> T, actual: T, day: &str) {
+    answer(get, actual, true, 1, day);
 }
-pub fn answer_part1<T: PartialEq + Debug>(get: impl FnOnce() -> T, actual: T) {
-    answer(get, actual, false, 1);
+pub fn answer_part1<T: PartialEq + Debug>(get: impl FnOnce() -> T, actual: T, day: &str) {
+    answer(get, actual, false, 1, day);
 }
-pub fn test_part2<T: PartialEq + Debug>(get: impl FnOnce() -> T, actual: T) {
-    answer(get, actual, true, 2);
+pub fn test_part2<T: PartialEq + Debug>(get: impl FnOnce() -> T, actual: T, day: &str) {
+    answer(get, actual, true, 2, day);
 }
-pub fn answer_part2<T: PartialEq + Debug>(get: impl FnOnce() -> T, actual: T) {
-    answer(get, actual, false, 2);
+pub fn answer_part2<T: PartialEq + Debug>(get: impl FnOnce() -> T, actual: T, day: &str) {
+    answer(get, actual, false, 2, day);
 }
 
 #[macro_export]
 macro_rules! part1_test {
     ($x:expr) => {{
-        utils::test_part1(|| part1(&include_str!("./input_test.txt").trim()), $x);
+        utils::test_part1(
+            || part1(&include_str!("./input_test.txt").trim()),
+            $x,
+            env!("CARGO_PKG_NAME"),
+        );
     }};
 }
 
 #[macro_export]
 macro_rules! part1_answer {
     ($x:expr) => {{
-        utils::answer_part1(|| part1(&include_str!("./input.txt").trim()), $x);
+        utils::answer_part1(
+            || part1(&include_str!("./input.txt").trim()),
+            $x,
+            env!("CARGO_PKG_NAME"),
+        );
     }};
 }
 
 #[macro_export]
 macro_rules! part2_test {
     ($x:expr) => {{
-        utils::test_part2(|| part2(&include_str!("./input_test.txt").trim()), $x);
+        utils::test_part2(
+            || part2(&include_str!("./input_test.txt").trim()),
+            $x,
+            env!("CARGO_PKG_NAME"),
+        );
     }};
 }
 
 #[macro_export]
 macro_rules! part2_answer {
     ($x:expr) => {{
-        utils::answer_part2(|| part2(&include_str!("./input.txt").trim()), $x);
+        utils::answer_part2(
+            || part2(&include_str!("./input.txt").trim()),
+            $x,
+            env!("CARGO_PKG_NAME"),
+        );
     }};
 }
