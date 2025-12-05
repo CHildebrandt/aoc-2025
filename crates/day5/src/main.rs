@@ -38,12 +38,7 @@ fn part2(input: &str) -> usize {
                 if range.0 <= curr.0 && range.1 >= curr.1 {
                     return list;
                 }
-                // Overlapping start
-                if curr.0 < range.0 && curr.1 >= range.0 && curr.1 <= range.1 {
-                    range.0 = curr.0;
-                    return list;
-                }
-                // Overlapping end
+                // Extend the range if overlapping
                 if curr.1 > range.1 && range.1 >= curr.0 {
                     range.1 = curr.1;
                     return list;
