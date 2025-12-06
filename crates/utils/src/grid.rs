@@ -7,7 +7,7 @@ use std::collections::HashMap;
 use std::fmt::{Debug, Display};
 use std::hash::Hash;
 use std::marker::PhantomData;
-use std::ops::{Add, DerefMut, Div, Index, IndexMut, Mul, Sub};
+use std::ops::{Add, Div, Index, IndexMut, Mul, Sub};
 
 pub type Position = (usize, usize);
 
@@ -604,6 +604,7 @@ impl<'a, 'b, T: Debug + Clone, D: Direction + 'static> Iterator for NeighborIter
     }
 }
 
+#[allow(dead_code)]
 pub struct SubGrid<'a, T: Debug + Clone> {
     grid: &'a Grid<T>,
     height: usize,
@@ -750,14 +751,14 @@ impl<T: Debug + Clone + Obstructs> Grid<T> {
     pub fn neighbor_iter_unobstructed<'a, D: Direction + 'static>(
         &'a self,
         pos: &'a Position,
-    ) -> impl Iterator<Item = (Position, &T)> + 'a {
+    ) -> impl Iterator<Item = (Position, &'a T)> {
         self.neighbor_iter::<D>(pos).filter(|(_, t)| !t.obstructs())
     }
 
     pub fn neighbor_iter_unobstructed_cardinal<'a>(
         &'a self,
         pos: &'a Position,
-    ) -> impl Iterator<Item = (Position, &T)> + 'a {
+    ) -> impl Iterator<Item = (Position, &'a T)> {
         self.neighbor_iter::<CardinalDirection>(pos)
             .filter(|(_, t)| !t.obstructs())
     }
