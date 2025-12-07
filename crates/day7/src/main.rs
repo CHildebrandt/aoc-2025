@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 
 use utils::{grid::Position, *};
 
@@ -58,15 +58,36 @@ fn part1(input: &str) -> usize {
     splits
 }
 
-fn part2(input: &str) -> usize {
-    0
+pub fn part2(input: &str) -> usize {
+    let grid = grid::Grid::from_str(input, Cell::from_char);
+    let mut map = HashMap::<Position, usize>::default();
+    let start_pos = grid.find(|cell| *cell == Cell::BeamStart).unwrap();
+    map.insert(start_pos, 1);
+    for (pos, cell) in grid.iter().filter(|(pos, _)| pos.0 > 0) {
+        if let Some(num_paths) = map.get(&(pos.0 - 1, pos.1)).map(|x| *x) {
+            match cell {
+                Cell::Empty => {
+                    *map.entry(pos).or_default() += num_paths;
+                }
+                Cell::Splitter => {
+                    *map.entry((pos.0, pos.1 - 1)).or_default() += num_paths;
+                    *map.entry((pos.0, pos.1 + 1)).or_default() += num_paths;
+                }
+                _ => {}
+            }
+        }
+    }
+
+    map.iter()
+        .filter_map(|(pos, num_paths)| (pos.0 == grid.height() - 1).then_some(num_paths))
+        .sum()
 }
 
 fn main() {
     part1_test!(21);
     part1_answer!(1579);
     part2_test!(40);
-    //     part2_answer!(0);
+    part2_answer!(13418215871354);
 }
 
 #[test]
