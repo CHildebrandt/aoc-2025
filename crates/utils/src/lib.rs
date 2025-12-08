@@ -82,6 +82,13 @@ macro_rules! part1_test {
             env!("CARGO_PKG_NAME"),
         );
     }};
+    ($y: expr, $x:expr) => {{
+        utils::test_part1(
+            || part1(&include_str!("./input_test.txt").trim(), $y),
+            $x,
+            env!("CARGO_PKG_NAME"),
+        );
+    }};
 }
 
 #[macro_export]
@@ -89,6 +96,13 @@ macro_rules! part1_answer {
     ($x:expr) => {{
         utils::answer_part1(
             || part1(&include_str!("./input.txt").trim()),
+            $x,
+            env!("CARGO_PKG_NAME"),
+        );
+    }};
+    ($y: expr, $x:expr) => {{
+        utils::answer_part1(
+            || part1(&include_str!("./input.txt").trim(), $y),
             $x,
             env!("CARGO_PKG_NAME"),
         );
@@ -104,6 +118,13 @@ macro_rules! part2_test {
             env!("CARGO_PKG_NAME"),
         );
     }};
+    ($y: expr, $x:expr) => {{
+        utils::test_part2(
+            || part2(&include_str!("./input_test.txt").trim(), $y),
+            $x,
+            env!("CARGO_PKG_NAME"),
+        );
+    }};
 }
 
 #[macro_export]
@@ -111,6 +132,13 @@ macro_rules! part2_answer {
     ($x:expr) => {{
         utils::answer_part2(
             || part2(&include_str!("./input.txt").trim()),
+            $x,
+            env!("CARGO_PKG_NAME"),
+        );
+    }};
+    ($y: expr, $x:expr) => {{
+        utils::answer_part2(
+            || part2(&include_str!("./input.txt").trim(), $y),
             $x,
             env!("CARGO_PKG_NAME"),
         );
