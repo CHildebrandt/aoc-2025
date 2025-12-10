@@ -68,13 +68,9 @@ impl Machine {
         }
     }
 
-    fn min_num_clicks(&mut self) -> usize {
-        let mut min = usize::MAX;
+    fn min_num_clicks(&self) -> usize {
         let mut state = vec![SwitchState::Off; self.goal.len()];
-        for i in 0..10 {
-            if i >= min {
-                break;
-            }
+        for i in 1..10 {
             for comb in self.buttons.iter().combinations(i) {
                 for &button in &comb {
                     for &switch_index in button {
@@ -82,12 +78,16 @@ impl Machine {
                     }
                 }
                 if state == self.goal {
-                    min = min.min(comb.len());
+                    return i;
                 }
                 state.iter_mut().for_each(|s| *s = SwitchState::Off);
             }
         }
-        min
+        0
+    }
+
+    fn min_num_clicks_part2(&self) -> usize {
+        0
     }
 }
 
@@ -95,19 +95,23 @@ fn part1(input: &str) -> usize {
     input
         .lines()
         .map(Machine::from_str)
-        .map(|mut machine| machine.min_num_clicks())
+        .map(|machine| machine.min_num_clicks())
         .sum()
 }
 
 fn part2(input: &str) -> usize {
-    0
+    input
+        .lines()
+        .map(Machine::from_str)
+        .map(|machine| machine.min_num_clicks_part2())
+        .sum()
 }
 
 fn main() {
     part1_test!(7);
     part1_answer!(484);
-    //     part2_test!(0);
-    //     part2_answer!(0);
+    // part2_test!(33);
+    // part2_answer!(0);
 }
 
 #[test]
