@@ -87,7 +87,26 @@ impl Machine {
     }
 
     fn min_num_clicks_part2(&self) -> usize {
-        0
+        use microlp::{ComparisonOp, LinearExpr, OptimizationDirection, Problem};
+
+        let mut problem = Problem::new(OptimizationDirection::Minimize);
+        // cost per button press
+        let cost = 1.0;
+        // number of presses for one button cannot exceed max joltage
+        let max = *self.joltage.iter().max().unwrap();
+        let num_presses = (0..self.buttons.len())
+            .map(|_| problem.add_integer_var(cost, (0, max as i32)))
+            .collect::<Vec<_>>();
+        for (i, jolts) in self.joltage.iter().enumerate() {
+            let mut expr = LinearExpr::empty();
+            for (button_indices, var) in self.buttons.iter().zip(&num_presses) {
+                if button_indices.contains(&i) {
+                    expr.add(*var, cost);
+                }
+            }
+            problem.add_constraint(expr, ComparisonOp::Eq, *jolts as f64);
+        }
+        problem.solve().unwrap().objective().round() as usize
     }
 }
 
@@ -110,8 +129,8 @@ fn part2(input: &str) -> usize {
 fn main() {
     part1_test!(7);
     part1_answer!(484);
-    // part2_test!(33);
-    // part2_answer!(0);
+    part2_test!(33);
+    part2_answer!(19210);
 }
 
 #[test]
