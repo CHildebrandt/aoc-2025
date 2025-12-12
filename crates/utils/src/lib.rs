@@ -29,7 +29,7 @@ pub fn extract_last_digit(num: usize) -> usize {
         .unwrap() as usize
 }
 
-pub fn whitespaced_ints(input: &str) -> Vec<usize> {
+pub fn whitespaced_ints<T: num::Integer + std::str::FromStr>(input: &str) -> Vec<T> {
     input
         .split_whitespace()
         .filter_map(|line| line.parse().ok())
